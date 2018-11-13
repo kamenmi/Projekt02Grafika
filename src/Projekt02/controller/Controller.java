@@ -26,8 +26,8 @@ public class Controller {
     private List<Point> clipPoints = new ArrayList<>();
     private final List<Point> linePoints = new ArrayList<>();
 
-    public int fillColorBorder = Color.green.getRGB();
-    public int fillColorBackground = Color.RED.getRGB();
+    private int fillColorBorder = Color.green.getRGB();
+    private int fillColorBackground = Color.RED.getRGB();
 
     public Controller(PGRFWindow window) {
         initObjects(window);
@@ -36,12 +36,11 @@ public class Controller {
 
     private void initObjects(PGRFWindow window) {
         raster = new Raster();
-        window.add(raster); // vložit plátno do okna
+        window.add(raster);
         raster.setFocusable(true);
         raster.grabFocus();
 
         renderer = new Renderer(raster);
-
         seedFill = new SeedFill();
         seedFill.setRaster(raster);
 
@@ -62,7 +61,7 @@ public class Controller {
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     polygonPoints.add(new Point(e.getX(), e.getY()));
                     if (polygonPoints.size() == 1) {
-                        polygonPoints.add(new Point(e.getX(), e.getY())); // naplnit clipPoints -- na prostredni tlacitko mysi
+                        polygonPoints.add(new Point(e.getX(), e.getY()));
                     }
                 } else if (SwingUtilities.isRightMouseButton(e)) {
                     linePoints.add(new Point(e.getX(), e.getY()));
@@ -75,8 +74,10 @@ public class Controller {
                     seedFill.init(e.getX(), e.getY(), fillColorBackground);
                     seedFill.fill();
                 } else if (e.isShiftDown()) {
-                    scanLine.init(polygonPoints, 0xff0000, 0xee82ee);
-                    scanLine.fill();
+                    /*scanLine.init(polygonPoints, 0xff0000, 0xee82ee);
+                    scanLine.fill();*/
+                    seedFill.init(e.getX(), e.getY(), Color.gray.getRGB());
+                    seedFill.fillVzor(); //Vzor SEEDfill
                 } else if (e.isAltDown()) {
                     seedFill.init(e.getX(), e.getY(), fillColorBorder);
                     seedFill.fillDruhaPodminka(); //Druha podminka SEEDfill
@@ -103,17 +104,19 @@ public class Controller {
         raster.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                //System.out.println(e.getKeyCode());
-                // na klávesu C vymazat plátno
                 if (e.getKeyCode() == KeyEvent.VK_C) {
                     raster.clear();
                     polygonPoints.clear();
                     linePoints.clear();
                 }
+                else if (e.getKeyCode() == KeyEvent.VK_L){
+                        /*seedFill.init(e.getX(), e.getY(), Color.gray.getRGB());
+                        seedFill.fillVzor(); //Vzor SEEDfill*/
+                    scanLine.init(polygonPoints, 0xff0000, 0xee82ee);
+                    scanLine.fill();
+                }
             }
         });
-        // chceme, aby canvas měl focus hned při spuštění
-        //  raster.requestFocus();
     }
 
     private void update() {
@@ -126,10 +129,8 @@ public class Controller {
 
         List<Point> out = renderer.clip(polygonPoints, clipPoints);
         if (out.size() > 2) {
-
             scanLine.init(out, Color.red.getRGB(), Color.BLUE.getRGB());
             scanLine.fill();
-
         }
     }
 }

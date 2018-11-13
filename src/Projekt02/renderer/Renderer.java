@@ -10,8 +10,7 @@ import java.util.List;
 public class Renderer {
 
     private Raster raster;
-    ArrayList<Point> ctverecPoint = new ArrayList<>();
-
+    private ArrayList<Point> ctverecPoint = new ArrayList<>();
 
     public Renderer(Raster raster) {
         this.raster = raster;
@@ -29,35 +28,6 @@ public class Renderer {
         ctverecPoint.add(p4);
 
         return ctverecPoint;
-    }
-
-    public void drawLine(int x1, int y1, int x2, int y2, int color) {
-
-        float k = (y2 - y1) / (float) (x2 - x1);
-        float q = y1 - k * x1;
-
-        if (Math.abs(k) < 1) {
-            if (x1 > x2) {
-                int a = x1;
-                x1 = x2;
-                x2 = a;
-            }
-            for (int x = x1; x <= x2; x++) {
-                int y = Math.round(k * x + q);
-                raster.drawPixel(x, y, color);
-            }
-        } else {
-            if (y1 > y2) {
-                int a = y1;
-                y1 = y2;
-                y2 = a;
-            }
-
-            for (int y = y1; y <= y2; y++) {
-                int x = Math.round((y - q) / k);
-                raster.drawPixel(x, y, color);
-            }
-        }
     }
 
     public void drawDDA(int x1, int y1, int x2, int y2, int color) {
@@ -109,30 +79,6 @@ public class Renderer {
                 x = x + g;
                 y = y + h;
             }
-        }
-    }
-
-    public void drawPolygon01(List<Integer> points) {
-        raster.clear();
-        if (points.size() >= 6) {
-            for (int i = 0; i < points.size() - 2; i += 2) {
-                drawLine(points.get(i), points.get(i + 1), points.get(i + 2), points.get(i + 3), 0xFF4488);
-            }
-            drawLine(points.get(0), points.get(1), points.get(points.size() - 2), points.get(points.size() - 1), 0xFF4488);
-        }
-    }
-
-    public void polygon(int x1, int y1, int x2, int y2, int vrcholy) {
-        double x0 = x2 - x1;
-        double y0 = y2 - y1;
-        double circleRadius = 2 * Math.PI;
-        double step = circleRadius / (double) vrcholy;
-        for (double i = 0; i < circleRadius; i += step) {
-            double x = x0 * Math.cos(step) + y0 * Math.sin(step);
-            double y = y0 * Math.cos(step) - x0 * Math.sin(step);
-            drawDDA((int) x0 + x1, (int) y0 + y1, (int) x + x1, (int) y + y1, 0xFF4488);
-            x0 = x;
-            y0 = y;
         }
     }
 

@@ -11,8 +11,6 @@ public class Edge {
         y2 = p2.y;
     }
 
-    //zjitisti jestli je hrana vodorovna
-    //true pokud je vodorovna a false pokud ne
     public boolean isHorizontal() {
         return y1 == y2;
     }
@@ -21,7 +19,6 @@ public class Edge {
      * oritetujeme usecky odshora dolu
      */
     public void orientate() {
-        // prohozeni, když y1 je vesti nez y2
         if (y1 > y2) {
             int a = y1;
             y1 = y2;
@@ -50,7 +47,6 @@ public class Edge {
      */
 
     public int getIntersection(int y) {
-        //vypocitat prusecik pomoci y, k, q; -- trivialni algoritmus (OSA Y)
         float dx = (float) (x2 - x1);
         float dy = (float) (y2 - y1);
         float k = dx / dy;
@@ -83,5 +79,4 @@ public class Edge {
                 (float) ((v1.x - v2.x) * (y1 - y2) - (x1 - x2) * (v1.y - v2.y));
         return new Point(Math.round(x0), Math.round(y0));
     }
-
 }
