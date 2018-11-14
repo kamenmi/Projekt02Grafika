@@ -74,13 +74,11 @@ public class Controller {
                     seedFill.init(e.getX(), e.getY(), fillColorBackground);
                     seedFill.fill();
                 } else if (e.isShiftDown()) {
-                    /*scanLine.init(polygonPoints, 0xff0000, 0xee82ee);
-                    scanLine.fill();*/
                     seedFill.init(e.getX(), e.getY(), Color.gray.getRGB());
-                    seedFill.fillVzor(); //Vzor SEEDfill
+                    seedFill.fillVzor();
                 } else if (e.isAltDown()) {
                     seedFill.init(e.getX(), e.getY(), fillColorBorder);
-                    seedFill.fillDruhaPodminka(); //Druha podminka SEEDfill
+                    seedFill.fillDruhaPodminka();
                 } else {
                     raster.drawPixel(e.getX(), e.getY(), 0xffffff);
                 }
@@ -108,10 +106,7 @@ public class Controller {
                     raster.clear();
                     polygonPoints.clear();
                     linePoints.clear();
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_L){
-                        /*seedFill.init(e.getX(), e.getY(), Color.gray.getRGB());
-                        seedFill.fillVzor(); //Vzor SEEDfill*/
+                } else if (e.getKeyCode() == KeyEvent.VK_L) {
                     scanLine.init(polygonPoints, 0xff0000, 0xee82ee);
                     scanLine.fill();
                 }

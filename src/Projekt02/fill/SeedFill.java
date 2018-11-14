@@ -14,7 +14,7 @@ public class SeedFill implements Filler {
     private int boundaryColor = Color.yellow.getRGB();
     private int fillColor = Color.green.getRGB();
 
-    private int fillcolor = Color.BLUE.getRGB();
+    private int fillColorVzor = Color.BLUE.getRGB();
     private int edgecolor = Color.GRAY.getRGB();
 
     private Raster raster;
@@ -34,7 +34,7 @@ public class SeedFill implements Filler {
     }
 
     public void fillVzor() {
-        seedMatrix(x, y);
+        seedVzor(x, y);
     }
 
     public void init(int x, int y, int color) {
@@ -68,10 +68,7 @@ public class SeedFill implements Filler {
         }
     }
 
-    private void seedMatrix(int ax, int ay) {
-        int[][] matrix = {{0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 1, 1, 0, 0, 0, 1, 1, 0}, {0, 1, 1, 0, 0, 0, 1, 1, 0},
-                {0, 0, 0, 1, 0, 1, 0, 0, 0}, {0, 0, 0, 0, 1, 0, 0, 0, 0}, {0, 0, 0, 1, 0, 1, 0, 0, 0},
-                {0, 1, 1, 0, 0, 0, 1, 1, 0}, {0, 1, 1, 0, 0, 0, 1, 1, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0}};
+    private void seedVzor(int ax, int ay) {
 
         int[][] pattern = {{1, 0, 0, 0, 0, 0, 0, 0},
                 {1, 1, 1, 1, 1, 0, 0, 0},
@@ -87,15 +84,14 @@ public class SeedFill implements Filler {
                 raster.drawPixel(ax, ay, color);
 
                 if (/*matrix*/pattern[ax % 8][ay % 8] == 1) {
-                    raster.drawPixel(ax, ay, fillcolor);
+                    raster.drawPixel(ax, ay, fillColorVzor);
                 } else {
-                    raster.drawPixel(ax, ay, edgecolor/* zde jina barva pro ukazku nemusi byt nutne edgecolor */);
+                    raster.drawPixel(ax, ay, edgecolor);
                 }
-                // stejne jako u klasicke seedfill metody
-                seedMatrix(ax + 1, ay);
-                seedMatrix(ax - 1, ay);
-                seedMatrix(ax, ay + 1);
-                seedMatrix(ax, ay - 1);
+                seedVzor(ax + 1, ay);
+                seedVzor(ax - 1, ay);
+                seedVzor(ax, ay + 1);
+                seedVzor(ax, ay - 1);
             }
         }
     }

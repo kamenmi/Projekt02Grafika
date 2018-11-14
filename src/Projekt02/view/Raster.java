@@ -50,9 +50,9 @@ public class Raster extends JPanel {
         return img.getRGB(x, y);
     }
 
-    public void setInfo() {
+    private void setInfo() {
         JLabel lblInfo = new JLabel();
-        lblInfo.setText("Mazání plátna (C) | ScanLine - Shiftl + left click | SeedFill - prvni podminka (Ctrl+ left click) | SeedFill - druha podminka (Alt + left click)");
+        lblInfo.setText("Mazání plátna(C)| ScanLine(L)| SeedFill 01 (Ctrl+ left click)| SeedFill 02 (Alt + left click)| SeedFill Vzor (Shiftl + left click)");
         lblInfo.setFont(new Font("courier", Font.PLAIN, 12));
         lblInfo.setForeground(new Color(0xffffff));
         add(lblInfo, BorderLayout.SOUTH);
